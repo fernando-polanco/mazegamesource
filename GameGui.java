@@ -78,7 +78,7 @@ public class GameGui extends JFrame implements ActionListener
                            nextLevelLoad();//if the player hit an exit door, load the next level
                        }
                    } catch (RuntimeException ex){
-                       //Para poder agarrar la excepcion de StupidAssMove y que no llegue ala consola
+                       // To catch the exception and prevent it from reaching the console
                    }
                    break;
                }
@@ -92,7 +92,7 @@ public class GameGui extends JFrame implements ActionListener
                            nextLevelLoad();//see above
                        }
                    }catch (RuntimeException ex){
-                       //Para poder agarrar la excepcion de StupidAssMove y que no llegue ala consola
+                       // To catch the exception and prevent it from reaching the console
                    }
 
                    break;
@@ -107,7 +107,7 @@ public class GameGui extends JFrame implements ActionListener
                            nextLevelLoad();//see above
                        }
                    }catch (RuntimeException ex){
-                       //Para poder agarrar la excepcion de StupidAssMove y que no llegue ala consola
+                       // To catch the exception and prevent it from reaching the console
                    }
                    break;
                }
@@ -121,7 +121,7 @@ public class GameGui extends JFrame implements ActionListener
                            nextLevelLoad();//see above
                        }
                    }catch (RuntimeException ex){
-                       //Para poder agarrar la excepcion de StupidAssMove y que no llegue ala consola
+                       // To catch the exception and prevent it from reaching the console
                    }
                    break;
                }
