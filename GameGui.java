@@ -65,49 +65,66 @@ public class GameGui extends JFrame implements ActionListener
     private class MyKeyHandler extends KeyAdapter //captures arrow keys movement
     {
         public void keyPressed (KeyEvent theEvent)
-       {         
+       {
            switch (theEvent.getKeyCode())
            {
                case KeyEvent.VK_UP:
                {
-                 theArc.playerMove(-1,0,scrapMatrix,fl.dimondCount());//let the Architect know we moved, along with the current matrix
-                 loadMatrixGui("updateLoad");//reload the gui to show the move
-                 if (theArc.getLevel()==true)
-                 {
-                    nextLevelLoad();//if the player hit an exit door, load the next level
-                 }
-                 break;
-              }
-              case KeyEvent.VK_DOWN:
-              {
-                 theArc.playerMove(1,0,scrapMatrix,fl.dimondCount());//see above
-                 loadMatrixGui("updateLoad");//see above
-                 if (theArc.getLevel()==true)//see above
-                 {
-                    nextLevelLoad();//see above
-                 }
-                 break;
-             }
-             case KeyEvent.VK_LEFT:
-             {
-                theArc.playerMove(0,-1,scrapMatrix,fl.dimondCount());//see above
-                loadMatrixGui("updateLoad");//see above
-                 if (theArc.getLevel()==true)//see above
-                 {
-                     nextLevelLoad();//see above
-                 }
-                break;
-             }
-             case KeyEvent.VK_RIGHT:
-             { 
-                theArc.playerMove(0,1,scrapMatrix,fl.dimondCount()); //see above
-                loadMatrixGui("updateLoad");//see above
-                 if (theArc.getLevel()==true)
-                 {
-                     nextLevelLoad();//see above
-                 }
-                break;   
-             }
+                   try{
+                       theArc.playerMove(-1,0,scrapMatrix,fl.dimondCount());//let the Architect know we moved, along with the current matrix
+                       loadMatrixGui("updateLoad");//reload the gui to show the move
+                       if (theArc.getLevel()==true)
+                       {
+                           nextLevelLoad();//if the player hit an exit door, load the next level
+                       }
+                   } catch (RuntimeException ex){
+                       //Para poder agarrar la excepcion de StupidAssMove y que no llegue ala consola
+                   }
+                   break;
+               }
+               case KeyEvent.VK_DOWN:
+               {
+                   try{
+                       theArc.playerMove(1,0,scrapMatrix,fl.dimondCount());//see above
+                       loadMatrixGui("updateLoad");//see above
+                       if (theArc.getLevel()==true)//see above
+                       {
+                           nextLevelLoad();//see above
+                       }
+                   }catch (RuntimeException ex){
+                       //Para poder agarrar la excepcion de StupidAssMove y que no llegue ala consola
+                   }
+
+                   break;
+               }
+               case KeyEvent.VK_LEFT:
+               {
+                   try {
+                       theArc.playerMove(0,-1,scrapMatrix,fl.dimondCount());//see above
+                       loadMatrixGui("updateLoad");//see above
+                       if (theArc.getLevel()==true)//see above
+                       {
+                           nextLevelLoad();//see above
+                       }
+                   }catch (RuntimeException ex){
+                       //Para poder agarrar la excepcion de StupidAssMove y que no llegue ala consola
+                   }
+                   break;
+               }
+               case KeyEvent.VK_RIGHT:
+               {
+                   try{
+                       theArc.playerMove(0,1,scrapMatrix,fl.dimondCount()); //see above
+                       loadMatrixGui("updateLoad");//see above
+                       if (theArc.getLevel()==true)
+                       {
+                           nextLevelLoad();//see above
+                       }
+                   }catch (RuntimeException ex){
+                       //Para poder agarrar la excepcion de StupidAssMove y que no llegue ala consola
+                   }
+                   break;
+               }
            }//end switch
            JLabel mainLabel=new JLabel("Total Dimonds Left to Collect"+theArc.getDimondsLeft()+"", JLabel.CENTER);//show how many dimonds are left to collect on the gui!
            JPanel dimondsPanel = new JPanel();
