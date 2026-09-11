@@ -26,6 +26,7 @@ public class GameGui extends JFrame implements ActionListener
         itemEnterName = new JMenuItem("Enter Player Name");
         itemEnterName.setAccelerator (KeyStroke.getKeyStroke (KeyEvent.VK_N, KeyEvent.CTRL_MASK));//press CTRL+N to enter your name if you want
         newGameItem = new JMenuItem("New Game");
+        newGameItem.setAccelerator (KeyStroke.getKeyStroke (KeyEvent.VK_P, KeyEvent.CTRL_MASK));//press CTRL+P to play a new game if you want
         openFileItem = new JMenuItem("Open Maze File.");
         openFileItem.setAccelerator (KeyStroke.getKeyStroke (KeyEvent.VK_O, KeyEvent.CTRL_MASK));//press CTRL+O to open a level if you want
         newGameItem.setActionCommand("New Game");
@@ -64,49 +65,66 @@ public class GameGui extends JFrame implements ActionListener
     private class MyKeyHandler extends KeyAdapter //captures arrow keys movement
     {
         public void keyPressed (KeyEvent theEvent)
-       {         
+       {
            switch (theEvent.getKeyCode())
            {
                case KeyEvent.VK_UP:
                {
-                 theArc.playerMove(-1,0,scrapMatrix,fl.dimondCount());//let the Architect know we moved, along with the current matrix
-                 loadMatrixGui("updateLoad");//reload the gui to show the move
-                 if (theArc.getLevel()==true)
-                 {
-                    nextLevelLoad();//if the player hit an exit door, load the next level
-                 }
-                 break;
-              }
-              case KeyEvent.VK_DOWN:
-              {
-                 theArc.playerMove(1,0,scrapMatrix,fl.dimondCount());//see above
-                 loadMatrixGui("updateLoad");//see above
-                 if (theArc.getLevel()==true)//see above
-                 {
-                    nextLevelLoad();//see above
-                 }
-                 break;
-             }
-             case KeyEvent.VK_LEFT:
-             {
-                theArc.playerMove(0,-1,scrapMatrix,fl.dimondCount());//see above
-                loadMatrixGui("updateLoad");//see above
-                 if (theArc.getLevel()==true)//see above
-                 {
-                     nextLevelLoad();//see above
-                 }
-                break;
-             }
-             case KeyEvent.VK_RIGHT:
-             { 
-                theArc.playerMove(0,1,scrapMatrix,fl.dimondCount()); //see above
-                loadMatrixGui("updateLoad");//see above
-                 if (theArc.getLevel()==true)
-                 {
-                     nextLevelLoad();//see above
-                 }
-                break;   
-             }
+                   try{
+                       theArc.playerMove(-1,0,scrapMatrix,fl.dimondCount());//let the Architect know we moved, along with the current matrix
+                       loadMatrixGui("updateLoad");//reload the gui to show the move
+                       if (theArc.getLevel()==true)
+                       {
+                           nextLevelLoad();//if the player hit an exit door, load the next level
+                       }
+                   } catch (RuntimeException ex){
+                       // To catch the exception and prevent it from reaching the console
+                   }
+                   break;
+               }
+               case KeyEvent.VK_DOWN:
+               {
+                   try{
+                       theArc.playerMove(1,0,scrapMatrix,fl.dimondCount());//see above
+                       loadMatrixGui("updateLoad");//see above
+                       if (theArc.getLevel()==true)//see above
+                       {
+                           nextLevelLoad();//see above
+                       }
+                   }catch (RuntimeException ex){
+                       // To catch the exception and prevent it from reaching the console
+                   }
+
+                   break;
+               }
+               case KeyEvent.VK_LEFT:
+               {
+                   try {
+                       theArc.playerMove(0,-1,scrapMatrix,fl.dimondCount());//see above
+                       loadMatrixGui("updateLoad");//see above
+                       if (theArc.getLevel()==true)//see above
+                       {
+                           nextLevelLoad();//see above
+                       }
+                   }catch (RuntimeException ex){
+                       // To catch the exception and prevent it from reaching the console
+                   }
+                   break;
+               }
+               case KeyEvent.VK_RIGHT:
+               {
+                   try{
+                       theArc.playerMove(0,1,scrapMatrix,fl.dimondCount()); //see above
+                       loadMatrixGui("updateLoad");//see above
+                       if (theArc.getLevel()==true)
+                       {
+                           nextLevelLoad();//see above
+                       }
+                   }catch (RuntimeException ex){
+                       // To catch the exception and prevent it from reaching the console
+                   }
+                   break;
+               }
            }//end switch
            JLabel mainLabel=new JLabel("Total Dimonds Left to Collect"+theArc.getDimondsLeft()+"", JLabel.CENTER);//show how many dimonds are left to collect on the gui!
            JPanel dimondsPanel = new JPanel();
@@ -124,7 +142,23 @@ public class GameGui extends JFrame implements ActionListener
         }
         else if (e.getActionCommand().equals("New Game"))//new game on the menu bar
         {
-             return; //maybe implent this feature later
+            // Reset time and level variables
+            catFileName = 1;
+            levelNum = 1;
+            tk = new TimeKeeper();
+
+            // Clean logic state
+            theArc = new TheArchitect();
+
+            // Load level 1
+            String startFile = "level" + catFileName + ".maz";
+            fl.loadFile(startFile);
+            scrapMatrix = fl.getGameMatrix();
+
+            // Set exit and render
+            theArc.setExit(fl.ExitXCord(), fl.ExitYCord());
+            loadMatrixGui("newLoad");
+
         }//end New Game Command
         else if(e.getActionCommand().equals("EnterName"))//Allows user to enter their name for high score
         {
